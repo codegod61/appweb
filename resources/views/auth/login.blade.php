@@ -66,7 +66,10 @@
                                 <br><br>
                         <b>Atau Login dengan akun:</b><br><br>
                         <a class="ml-1 btn btn-primary btn-sm" href="{{ url('auth/google') }}" style="margin-top: 0px !important;background: rgb(243, 5, 5);color: #ffffff;padding: 5px;border-radius:7px;" id="btn-glogin">
-                        <i class="fab fa-google" aria-hidden="true"></i>&nbsp;Google    </a>
+                        <i class="fab fa-google" aria-hidden="true"></i>&nbsp;Google</a>
+
+                        <a class="ml-1 btn btn-primary btn-sm" href="{{ url('auth/twitter') }}" style="margin-top:0px !important;background: rgb(29, 161, 242); color:#ffffff; padding:5px; border-radius:7px" id="btn-twlogin">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>&nbsp;Twitter</a>
                             </div>
                         </div>
                     </form>

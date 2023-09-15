@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\TwitterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
-Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
+
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+Route::get('auth/twitter', [TwitterController::class, 'redirectToTwitter']);
+
+Route::get('auth/twitter/callback', [TwitterController::class, 'handleTwitterCallback']);

@@ -17,7 +17,13 @@ return [
     'google' => [
         'client_id' => '153718602862-t8renjljgn5hj8qv3m8fda9kqlsrpt8h.apps.googleusercontent.com',
         'client_secret' => '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',
-        'redirect' => 'http://127.0.0.1:8000/auth/callback',
+        'redirect' => 'http://localhost:8000/auth/google/callback',
+    ],
+
+    'twitter' => [
+        'client_id' => 'XhPosp4A3r5kDOrF1NFhBs0pu',
+        'client_secret' => 'S8QKIPHwbOHUx0ezEgWZyFVz1wUy5vT3TGnVQkgDb8qpanE6pE',
+        'redirect' => 'http://localhost:8000/auth/twitter/callback',
     ],
 
     'mailgun' => [
