@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+// use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 class LoginController extends Controller
 {
@@ -19,7 +24,7 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    // use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.
@@ -33,8 +38,71 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
+    // public function __construct()
+    // {
+    //     $this->middleware('guest')->except('logout');
+    // }
+    public function construct() {
+        $this->middleware('guest')->except([
+            'logout','home'
+        ]);
+        $this->middleware('auth')->only('logout', 'home');
+        $this->middleware('verified')->only('home');
+    }
+    
+    public function register() {
+        return view('auth.register');
+    }
+    
+    public function store(Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:250',
+            'email' => 'required|string|email:rfc,dns|max:250|unique:users',
+            'password' => 'required|string|min:8|confirmed'
+        ]);
+
+        $user = User::create([
+            'name'=> $request->name,
+            'email'=> $request->email,
+            'password'=> Hash::make($request->password)
+        ]);
+
+        event(new Registered($user));
+        $credentials = $request->only('email', 'password');
+        Auth::attempt($credentials);
+        $request->session()->regenerate();
+        return redirect()->route('verification.notice');
+    }
+
+    public function login(){
+        return view('auth.login');
+    }
+
+    public function authenticate(Request $request) {
+        $credentials = $request->validate([
+            'email'=>'required|email',
+            'password'=>'required'
+        ]);
+
+        if(Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('home');
+        }
+
+        return back()->withErrors([
+            'email'=>'mohon maaf, kode credentials anda tidak credentials Anda tidak cocok dengan kode credentials Anda yang telah kami simpan.',
+        ])->onlyinput('email');
+    }
+
+    public function home() {
+        return view('home');
+    }
+
+    public function logout(Request $request) {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login')
+            ->withSuccess('Selamat, Anda telah berhasil melakukan Logout!');
     }
 }
