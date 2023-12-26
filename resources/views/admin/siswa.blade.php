@@ -199,6 +199,10 @@
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#tambahSiswaExcelModal"><i class="fa-solid fa-plus"></i> Tambah
                                         Siswa - Excel</button>
+                                       <!-- Add the download button -->
+                                        <a href="{{ route('export.users') }}" class="btn btn-success">
+                                            <i class="fa-solid fa-download"></i> Download Data Siswa
+                                        </a>
 
                                     <!-- Modal Tambah Siswa -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"

@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth', 'cekleveladmin', 'sweetalert'], 'prefix' 
         Route::get('/cache',[ExcelController::class,'cache'])->name('cache');
         Route::get('/import',[ExcelController::class,'import'])->name('import');
         Route::post('/import-proses',[ExcelController::class,'import_proses'])->name('import-proses');
+        Route::get('/export-users', [ExcelController::class, 'exportUsers'])->name('export.users');
     });
 });
 
